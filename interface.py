@@ -4,7 +4,7 @@ import socket
 class Interface:
     def __init__(self):
         self.connection = None
-        self.host = ""
+        self.host = "" # ip:port goes here!!
         self.open_connection()
         
         self.debug = False
